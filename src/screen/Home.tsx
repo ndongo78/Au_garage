@@ -38,13 +38,19 @@ const Home =()=>{
         {icon:"motorcycle",title:"Motos"},
         {icon:"bicycle",title:"Vélos"},
     ]
+    const bottomList=[
+        {icon:"home",title:"Accueil"},
+        {icon:"car",title:"Voitures"},
+        {icon:"luggage-cart",title:"aide"},
+        {icon:"person-outline",title:"profil"},
+    ]
     return(
-        <View style={[tw`bg-red-500 flex-1 flex-row items-center`, styles.container]}>
+        <View style={[tw` ${isShow ? "bg-[#d33]" :'bg-white'} flex-1 flex-row items-center`, styles.container]}>
             {
                 isShow &&  <View style={[tw`ml-3`,styles.drawer]}>
                     <View style={tw`flex-row justify-between items-center`}>
                         <Avatar.Image source={{uri:'https://picsum.photos/100'}} style={tw`mt-3 m-2`}  />
-                        <View style={tw`absolute -right-45 text-white`}>
+                        <View style={[tw`absolute right-10 text-white  `,{zIndex:99}]}>
                             <Pressable onPress={()=>setIsShow(!isShow)}>
                                 <Icon name="close-circle" size={28} color={"#fff"} />
                             </Pressable>
@@ -67,8 +73,6 @@ const Home =()=>{
                                     <Text style={tw`text-xl font-bold m-1 text-white`}>{menu.title}</Text>
                                 </Pressable>)
                             }
-
-
                         </View>
                         <View style={tw`flex-row items-center mb-2 w-[220px]`}>
                             <Text style={tw`text-white text-xl`}>Choisir votre language : </Text>
@@ -85,13 +89,12 @@ const Home =()=>{
                 </View>
             }
             {
-                isShow && <View style={[tw`bg-red-200 flex-1 rounded-xl ${isShow ? '-right-10': ''}`,{height : isShow ? height/1.6 : height ,zIndex:-99}]}></View>
+                isShow && <View style={[tw`bg-[#eaa] flex-1 absolute rounded-xl ${isShow ? '-right-45': ''}`,{height : isShow ? height/1.5 : height ,zIndex:-99, width:width} ]}></View>
 
             }
             {/*container*/}
-            <ScrollView style={tw`flex-1`} contentContainerStyle={tw`flex-1`}>
-                <View style={[tw`bg-white flex-1 rounded-xl absolute bg-slate-100 ${isShow ? '-right-10': ''}`, {height : isShow ? height/1.4 : height , width: !isShow ? width :150},styles.container]}>
 
+                <View style={[tw`bg-white flex-1 rounded-xl absolute bg-slate-100 ${isShow ? '-right-5 top-23': ''}`, {height : isShow ? height/1.3 : height , width: !isShow ? width :150,zIndex:999},styles.container]}>
                     <View style={tw`flex-row justify-between`}>
                         <TouchableOpacity onPress={()=>setIsShow(!isShow)}>
                             <Icon name={"menu"} size={40} />
@@ -106,6 +109,7 @@ const Home =()=>{
                             </Pressable>
                         </View>
                     </View>
+                    <ScrollView>
                     {/*input search*/}
                      <View style={tw`flex-row items-center justify-between m-5`}>
                     <View style={tw`bg-slate-200 items-center flex-row w-74  p-2 rounded-full`}>
@@ -138,10 +142,31 @@ const Home =()=>{
                         />
 
                     </View>
+                    </ScrollView>
                     {/*end menu */}
+
+                    {/*    buttom nav*/}
+                    <View style={tw` flex-row justify-between p-2 bg-slate-200 shadow-xl`}>
+                        {
+                            bottomList.map((menu,index)=> <Pressable
+                                style={tw`flex-row items-center  ${currentMenu === index ? 'bg-[#d33] p-2 rounded-xl text-white  ' :''}`} key={index}
+                                onPress={()=> setCurrentMenu(index)}>
+                                {
+                                    menu.icon === "luggage-cart" ?  <Font6 name={menu.icon} size={40} color={ currentMenu === index ?"#fff" : "#0019" } />
+                                        :
+                                        <Icon name={menu.icon} size={40} color={ currentMenu === index ?"#fff" : "#0019" }/>
+                                }
+
+                                {/*<Text style={tw`text-xl font-bold m-1 text-white`}>{menu.title}</Text>*/}
+                            </Pressable>)
+                        }
+                    </View>
+                    {/*   end buttom nav*/}
                 </View>
 
-            </ScrollView>
+
+
+
         </View>
     )
 }
