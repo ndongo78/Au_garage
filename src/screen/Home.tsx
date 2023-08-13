@@ -15,7 +15,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Font6 from "react-native-vector-icons/FontAwesome5";
 import Material from "react-native-vector-icons/MaterialCommunityIcons";
 import {useState} from "react";
-import {Banner} from "../components";
+import {Banner, BottomNav, Services} from "../components";
 
 
 const {width, height} =Dimensions.get("window")
@@ -23,6 +23,8 @@ const {width, height} =Dimensions.get("window")
 const Home =()=>{
     const [isShow, setIsShow] = useState(false);
     const [currentMenu, setCurrentMenu] = useState(0);
+    const [currentMenuBottom, setCurrentMenuBottom] = useState(0);
+
 
     const menuLis=[
         {icon:"home",title:"Accueil"},
@@ -140,27 +142,13 @@ const Home =()=>{
                                 <Text style={tw`text-xl`}>{item.title} </Text>
                             </TouchableOpacity>}
                         />
-
+                     <Services/>
                     </View>
                     </ScrollView>
                     {/*end menu */}
 
                     {/*    buttom nav*/}
-                    <View style={tw` flex-row justify-between p-2 bg-slate-200 shadow-xl`}>
-                        {
-                            bottomList.map((menu,index)=> <Pressable
-                                style={tw`flex-row items-center  ${currentMenu === index ? 'bg-[#d33] p-2 rounded-xl text-white  ' :''}`} key={index}
-                                onPress={()=> setCurrentMenu(index)}>
-                                {
-                                    menu.icon === "luggage-cart" ?  <Font6 name={menu.icon} size={40} color={ currentMenu === index ?"#fff" : "#0019" } />
-                                        :
-                                        <Icon name={menu.icon} size={40} color={ currentMenu === index ?"#fff" : "#0019" }/>
-                                }
-
-                                {/*<Text style={tw`text-xl font-bold m-1 text-white`}>{menu.title}</Text>*/}
-                            </Pressable>)
-                        }
-                    </View>
+                     <BottomNav bottomList={bottomList} currentMenuBottom={currentMenuBottom} setCurrentMenuBottom={setCurrentMenuBottom} />
                     {/*   end buttom nav*/}
                 </View>
 
